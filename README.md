@@ -27,3 +27,11 @@ npm audit fix
 ------------------------------------------------------
 - Create an api key via Trafikverkt(https://api.trafikinfo.trafikverket.se/)
 
+
+
+### step by step
+------------------------------------------------------
+- First we installed sqlite.
+- We create a API key.
+- We create a file ".env" and we put the API key in it.
+- To start the backend write npm start. Port 1337

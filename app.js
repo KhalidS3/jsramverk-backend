@@ -45,3 +45,5 @@ httpServer.listen(port, () => {
 })
 
 fetchTrainPositions(io);
+
+module.exports = httpServer;

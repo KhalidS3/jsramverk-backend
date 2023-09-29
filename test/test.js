@@ -32,6 +32,9 @@ describe('app', () => {
             chai.request(server)
                 .get("/delayed")
                 .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
                     res.should.have.status(200);
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("array");

@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/KhalidS3/jsramverk-backend/actions/workflows/nodejs.yml/badge.svg)](https://github.com/KhalidS3/jsramverk-backend/actions/workflows/nodejs.yml)
+
 ### Jsramverk-backend
 ---------------------------
 

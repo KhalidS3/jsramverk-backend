@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["https://www.student.bth.se", "https://www.student.bth.se/~khsa16/editor/"],
+    origin: ["https://www.student.bth.se", "https://www.student.bth.se/~khsa16/editor/", "http://localhost:3000"],
     methods: ["GET", "POST"]
   }
 });

@@ -30,6 +30,7 @@ describe('app', () => {
     describe('GET /delayed', () => {
         it('should return 200 status and an object of delayed trains', async () => {
             const res = await chai.request(server).get("/delayed");
+
             res.should.have.status(200);
             res.body.should.be.an("object");
         });
@@ -52,18 +53,18 @@ describe('app', () => {
     //             });
     //     });
 
-        // it('should return 200 status and an array of tickets', async ()  => {
-        //     try {
-        //         const res = await chai.request(server).get("/tickets");
-        //         res.should.have.status(200);
-        //         res.body.should.be.an("object");
-        //         res.body.data.should.be.an("array");
-        //         res.body.data.length.should.be.above(0);
-        //     } catch (err) {
-        //         console.error("Error in test:", err);
-        //         throw err; // Rethrow the error to fail the test
-        //     }
-        // });
+    // it('should return 200 status and an array of tickets', async ()  => {
+    //     try {
+    //         const res = await chai.request(server).get("/tickets");
+    //         res.should.have.status(200);
+    //         res.body.should.be.an("object");
+    //         res.body.data.should.be.an("array");
+    //         res.body.data.length.should.be.above(0);
+    //     } catch (err) {
+    //         console.error("Error in test:", err);
+    //         throw err; // Rethrow the error to fail the test
+    //     }
+    // });
     // });
 
 

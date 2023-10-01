@@ -1,8 +1,7 @@
-/* global it describe */
-
 process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
+const { describe, it } = require('mocha');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
 
@@ -10,6 +9,7 @@ const server = require('../app.js');
 chai.should();
 
 chai.use(chaiHttp);
+
 
 describe('app', () => {
     describe('GET /', () => {
@@ -50,7 +50,6 @@ describe('app', () => {
     //     this.timeout(300000); // Set timeout for all tests in this describe block
 
     //     it('should return 200 status and an array of tickets', function() {
-    //         // Return the promise
     //         return chai.request(server)
     //             .get("/tickets")
     //             .then((res) => {
@@ -74,7 +73,6 @@ describe('app', () => {
     //             trainnumber: '67678',
     //             traindate: '2023-09-25'
     //         };
-    //         // Return the promise
     //         return chai.request(server)
     //             .post("/tickets")
     //             .send(ticketData)
@@ -88,6 +86,4 @@ describe('app', () => {
     //             });
     //     });
     // });
-
-
 });

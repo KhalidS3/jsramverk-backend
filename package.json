@@ -6,7 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text --reporter=clover mocha --exit --timeout 10000",
     "start": "nodemon app.js",
-    "clean": "rm -rf node_modules package-lock.json"
+    "clean": "rm -rf node_modules package-lock.json",
+    "eslint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,9 @@
   "devDependencies": {
     "chai": "^4.3.10",
     "chai-http": "^4.4.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react": "^7.33.2",
+    "javascript-style-guide": "^1.0.1",
     "mocha": "^10.2.0",
     "node-html-parser": "^1.1.12",
     "nyc": "^14.1.1"

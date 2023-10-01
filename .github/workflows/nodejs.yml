@@ -31,4 +31,5 @@ jobs:
                   mongodb-version: ${{ matrix.mongodb-version }}
 
             - run: npm ci
+            - run: npm run eslint
             - run: npm test test/test.js

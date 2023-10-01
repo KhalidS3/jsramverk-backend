@@ -64,7 +64,7 @@ describe('app', () => {
         //         throw err; // Rethrow the error to fail the test
         //     }
         // });
-    });
+    // });
 
 
     // describe('POST /tickets', function() {

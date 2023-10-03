@@ -42,8 +42,10 @@ const database = {
             return { db: _db, collection: _db.collection(collectionName), client: _client };
         }
         // let dsn = "mongodb://localhost:27017/trians";
-        let dsn = `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}
-            @cluster0.eoj2ui3.mongodb.net/?retryWrites=true&w=majority`;
+        let dsn = `mongodb+srv://${process.env.ATLAS_USERNAME}:` +
+          `${process.env.ATLAS_PASSWORD}` +
+          `@cluster0.eoj2ui3.mongodb.net/` +
+          `?retryWrites=true&w=majority`;
 
         if (process.env.NODE_ENV === 'test') {
             dsn = `mongodb://localhost:27017/trians`;

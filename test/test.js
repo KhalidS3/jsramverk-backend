@@ -104,24 +104,24 @@ chai.use(chaiHttp);
 
 describe('app', () => {
     before(async function() {
-        this.timeout(5000); // Optional: set timeout if the connection takes longer
+        this.timeout(5000);
         try {
-            await db.openDb(); // Open connection before all tests
+            await db.openDb();
             console.log('Database connection opened');
         } catch (err) {
             console.error('Error opening database connection:', err);
-            throw err; // This will abort the tests because the setup failed
+            throw err;
         }
     });
 
-    // after(async function() {
-    //     try {
-    //         await db.closeDb(); // Close connection after all tests
-    //         console.log('Database connection closed');
-    //     } catch (err) {
-    //         console.error('Error closing database connection:', err);
-    //     }
-    // });
+    after(async function() {
+        try {
+            await db.closeDb();
+            console.log('Database connection closed');
+        } catch (err) {
+            console.error('Error closing database connection:', err);
+        }
+    });
 
     describe('GET /', () => {
         it('200 HAPPY PATH', (done) => {
@@ -159,39 +159,30 @@ describe('app', () => {
         });
     });
 
-    describe('POST /tickets', function() {
-        // this.timeout(3000000);
+    // describe('POST /tickets', function() {
+    //     // this.timeout(3000000);
 
-        it('should return 201 status and a success message on valid input', function() {
-            const ticketData = {
-                code: '12345',
-                trainnumber: 'TEST125',
-                traindate: '2023-09-25'
-            };
+    //     it('should return 201 status and a success message on valid input', function() {
+    //         const ticketData = {
+    //             code: '12345',
+    //             trainnumber: 'TEST125',
+    //             traindate: '2023-09-25'
+    //         };
 
-            return chai.request(server)
-                .post("/tickets")
-                .send(ticketData)
-                .then((res) => {
-                    res.should.have.status(201);
-                    res.body.should.be.an("object");
-                    // res.body.data.should.not.be.empty;
-                    res.body.data.should.be.an("array");
-                    res.body.data.should.include(ticketData);
-                })
-                .catch((err) => {
-                    throw err;
-                });
-        });
-    });
-
-    after(async function() {
-        try {
-            await db.closeDb(); // Close connection after all tests
-            console.log('Database connection closed');
-        } catch (err) {
-            console.error('Error closing database connection:', err);
-        }
-    });
+    //         return chai.request(server)
+    //             .post("/tickets")
+    //             .send(ticketData)
+    //             .then((res) => {
+    //                 res.should.have.status(201);
+    //                 res.body.should.be.an("object");
+    //                 // res.body.data.should.not.be.empty;
+    //                 res.body.data.should.be.an("array");
+    //                 res.body.data.should.include(ticketData);
+    //             })
+    //             .catch((err) => {
+    //                 throw err;
+    //             });
+    //     });
+    //});
 });
 

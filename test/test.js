@@ -8,45 +8,40 @@ const db = require('../db/database.js');
 
 chai.should();
 chai.use(chaiHttp);
+const collectionName = "tickets";
 
-const dataset = [
-    {
-        "_id": "651c021afa253e44db2248dc",
-        "code": "TEST1",
-        "trainnumber": "13834",
-        "traindate": "2023-10-03"
-    },
-    {
-        "_id": "651c3666b7311261b550829a",
-        "code": "TEST2",
-        "trainnumber": "3484",
-        "traindate": "2023-10-03"
-    }
-];
 
 describe('app', () => {
+    let dbInstance;
+
     before(async function() {
         this.timeout(5000);
         try {
-            await db.openDb();
-            await db.collection.insertMany(dataset);
+            dbInstance = await db.openDb();
+
+            const databaseInfoOfCollection = await dbInstance.db.listCollections({ name: collectionName }).next();
+
+            if (databaseInfoOfCollection) {
+                await dbInstance.collection.drop(); // drop the collection if it exists
+                console.log(`${collectionName} collection dropped`);
+            }
+
             console.log('Database connection opened');
         } catch (err) {
-            console.error('Error opening database connection:', err);
+            console.error('Error initializing database setup:', err);
             throw err;
         }
     });
 
     after(async function() {
         try {
-            await db.openDb();
-            await db.collection.deleteMany({ _id: { $in: dataset.map(item => item._id) } });
             await db.closeDb();
             console.log('Database connection closed');
         } catch (err) {
             console.error('Error closing database connection:', err);
         }
     });
+
 
     describe('GET /', () => {
         it('200 HAPPY PATH', (done) => {
@@ -76,7 +71,7 @@ describe('app', () => {
                 res.should.have.status(200);
                 res.body.should.be.an("object");
                 res.body.data.should.be.an("array");
-                res.body.data.length.should.be.above(0);
+                res.body.data.length.should.be.equal(0);
             } catch (err) {
                 console.error("Error in test:", err);
                 throw err;

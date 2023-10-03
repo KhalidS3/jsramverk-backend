@@ -9,9 +9,19 @@ const db = require('../db/database.js');
 chai.should();
 chai.use(chaiHttp);
 
-const datas = [
-    { "_id": "651c021afa253e44db2248dc", "code": "TEST1", "trainnumber": "13834", "traindate": "2023-10-03" },
-    { "_id": "651c3666b7311261b550829a", "code": "TEST2", "trainnumber": "3484", "traindate": "2023-10-03" }
+const dataset = [
+    {
+        "_id": "651c021afa253e44db2248dc",
+        "code": "TEST1",
+        "trainnumber": "13834",
+        "traindate": "2023-10-03"
+    },
+    {
+        "_id": "651c3666b7311261b550829a",
+        "code": "TEST2",
+        "trainnumber": "3484",
+        "traindate": "2023-10-03"
+    }
 ];
 
 describe('app', () => {
@@ -19,7 +29,7 @@ describe('app', () => {
         this.timeout(5000);
         try {
             await db.openDb();
-            await db.collection.insertMany(seedData);
+            await db.collection.insertMany(dataset);
             console.log('Database connection opened');
         } catch (err) {
             console.error('Error opening database connection:', err);
@@ -30,7 +40,7 @@ describe('app', () => {
     after(async function() {
         try {
             await db.openDb();
-            await db.collection.deleteMany({ _id: { $in: datas.map(item => item._id) } });
+            await db.collection.deleteMany({ _id: { $in: dataset.map(item => item._id) } });
             await db.closeDb();
             console.log('Database connection closed');
         } catch (err) {

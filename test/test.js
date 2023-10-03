@@ -19,7 +19,9 @@ describe('app', () => {
         try {
             dbInstance = await db.openDb();
 
-            const databaseInfoOfCollection = await dbInstance.db.listCollections({ name: collectionName }).next();
+            const collectionInfoCursor = dbInstance.db.listCollections({ name: collectionName });
+            const databaseInfoOfCollection = await collectionInfoCursor.next();
+
 
             if (databaseInfoOfCollection) {
                 await dbInstance.collection.drop(); // drop the collection if it exists

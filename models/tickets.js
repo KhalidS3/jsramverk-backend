@@ -10,6 +10,8 @@ const tickets = {
 
             const allTickets = await db.collection.find().toArray();
 
+            console.log("getting all tickets:", allTickets);
+
             return res.status(200).json({
                 data: allTickets
             });
@@ -24,7 +26,7 @@ const tickets = {
         } finally {
             try {
                 if (db) {
-                    await db.client.close();
+                    await database.closeDb();
                 }
             } catch (error) {
                 console.error('Error closing database connection:', error);
@@ -66,6 +68,7 @@ const tickets = {
                 data: responseData
             });
         } catch (error) {
+            console.error('Server Error:', error);
             return res.status(500).json({
                 error: {
                     title: "Database error (createTicket)",
@@ -76,90 +79,14 @@ const tickets = {
         } finally {
             try {
                 if (db) {
-                    await db.client.close();
+                    await database.closeDb();
                 }
             } catch (error) {
                 console.error('Error closing database connection:', error);
             }
         }
     }
-
-/*     createTicket: async function createTicket(req, res) {
-        let db;
-
-        try {
-            db = await database.openDb();
-
-            const result = await db.collection.insertOne({
-                "code": req.body.code,
-                "trainnumber": req.body.trainnumber,
-                "traindate": req.body.traindate
-            });
-
-            return res.status(201).json({
-                data: {
-                    id: result.insertedId,
-                    code: req.body.code,
-                    trainnumber: req.body.trainnumber,
-                    traindate: req.body.traindate,
-                }
-            });
-        } catch (error) {
-            return res.status(500).json({
-                error: {
-                    title: "Database error (createTicket)",
-                    detail: error.message,
-                    source: "/tickets"
-                }
-            });
-        } finally {
-            try {
-                if (db) {
-                    await db.client.close();
-                }
-            } catch (error) {
-                console.error('Error closing database connection:', error);
-            }
-        }
-    } */
 };
 
 module.exports = tickets;
 
-/* const tickets = {
-    getTickets: async function getTickets(req, res){
-        var db = await database.openDb();
-
-        var allTickets = await db.all(`SELECT *, ROWID as id FROM tickets ORDER BY ROWID DESC`);
-
-        await db.close();
-
-        return res.json({
-            data: allTickets
-        });
-    },
-
-    createTicket: async function createTicket(req, res){
-        var db = await database.openDb();
-
-        const result = await db.run(
-            'INSERT INTO tickets (code, trainnumber, traindate) VALUES (?, ?, ?)',
-            req.body.code,
-            req.body.trainnumber,
-            req.body.traindate,
-        );
-
-        await db.close();
-
-        return res.json({
-            data: {
-                id: result.lastID,
-                code: req.body.code,
-                trainnumber: req.body.trainnumber,
-                traindate: req.body.traindate,
-            }
-        });
-    }
-};
-
-module.exports = tickets;*/

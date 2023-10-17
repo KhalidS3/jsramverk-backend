@@ -85,6 +85,69 @@ const tickets = {
                 console.error('Error closing database connection:', error);
             }
         }
+    },
+
+    updateTicket: async function updateTicket(req, res) {
+        let db;
+
+        try {
+            db = await database.openDb();
+
+            // Retrieving the ticket's ID from the request
+            const ticketId = new ObjectId(req.params.id);
+
+            // Prepare the updated data
+            const updatedData = {
+                code: req.body.code,
+                trainnumber: req.body.trainnumber,
+                traindate: req.body.traindate
+            };
+
+            console.log("Update Data for ID:", ticketId, updatedData);
+
+            // Update the ticket in the database
+            const result = await db.collection.updateOne({_id: ticketId}, {$set: updatedData});
+
+            // Check if any document was actually updated
+            if (result.matchedCount === 0) {
+                return res.status(404).json({
+                    error: {
+                        title: "No ticket found",
+                        detail: "No ticket with the given ID was found",
+                        source: "/tickets/:id"
+                    }
+                });
+            }
+
+            console.log("Update Result:", result);
+
+            // Send the response with the updated data
+            const responseData = {
+                id: ticketId,
+                ...updatedData
+            };
+
+            return res.status(200).json({
+                data: responseData
+            });
+        } catch (error) {
+            console.error('Server Error:', error);
+            return res.status(500).json({
+                error: {
+                    title: "Database error (updateTicket)",
+                    detail: error.message,
+                    source: "/tickets/:id"
+                }
+            });
+        } finally {
+            try {
+                if (db) {
+                    await database.closeDb();
+                }
+            } catch (error) {
+                console.error('Error closing database connection:', error);
+            }
+        }
     }
 };
 
